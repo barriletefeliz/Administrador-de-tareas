@@ -1,100 +1,90 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState } from 'react'
 import uuid from 'uuid/dist/v4'
+import './Styles.css'
 
-const Form = ({createTarea}) => {
+const Form = ({createTask}) => {
 
-    // State de tareas
-    const [tarea, updateC] = useState({
-        mascota: '',
-        propietario: '',
-        fecha: '',
-        hora: '', 
+    //State local de tareas
+    const [taskState, updateState] = useState({
+        task: '',
+        objective: '',
+        date: '',
         description: ''
     });
 
-    const [error, updateError] = useState(false)
+    const [error, updateError] = useState(false);
+
 
     const handleChange = e => {
-        updateC({
-            ...tarea,
+        updateState({
+            ...taskState,
             [e.target.name] : e.target.value
         })
     }
 
-    const {mascota, propietario, fecha, hora, description} = tarea;
+    //extracción de valores
+    const {task, objective, date, description} = taskState;
 
-    const submitTarea = e => {
+    //agregar cita
+    const onSubmit = e => {
         e.preventDefault();
-        // validacion
-        if(mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' || hora.trim() === '' || description.trim() === ''){
-            updateError(true); 
-            return;
-        } 
-        //eliminar mensaje de error
-        updateError(false); 
-
-
-        //asignando ID
-        tarea.id = uuid();
-
-        //creando tarea
-        createTarea(tarea);
-
-        //reiniciando form
-        updateC({
-            mascota: '',
-            propietario: '',
-            fecha: '',
-            hora: '', 
+        //validación
+        if(task.trim() === '' || objective.trim() === '' || date.trim() === '' || description.trim() === '' ){
+            updateError(true);
+            return
+        } updateError(false)
+        //asignación de id
+        taskState.id = uuid();
+        //creación de cita
+        createTask(taskState);
+        //reinicio del form
+        updateState({
+            task: '',
+            objective: '',
+            date: '',
             description: ''
-        })
+        });
+
     }
 
   return ( 
       <Fragment>
-          <h2>Crear tarea</h2>
-          {error ? <p className="alerta-error">Todos los campos son obligatorios</p> : null }
-
-          <form onSubmit={submitTarea}>
+          <h2 className="create-task">Ingresá una tarea</h2>
+          {error ? <p className="alert-error">Todos los campos son obligatorios</p>: null}
+          <form 
+            onSubmit={onSubmit}
+          
+          >
               <label>Tarea</label>
               <input
-              type="text"
-              name="mascota"
-              className="u-full-width"
-              placeholder="nombre mascota"
-              onChange={handleChange}
-              value={mascota}
+                type="text"
+                name="task"
+                className="u-full-width"
+                placeholder="Ingresa tu tarea"
+                onChange={handleChange}
+                value={task}
               />
 
-          <label>Name</label>
+          <label>Objetivo</label>
               <input
-              type="text"
-              name="propietario"
-              className="u-full-width"
-              placeholder="nombre dueño"
-              onChange={handleChange}
-              value={propietario}
+                type="text"
+                name="objective"
+                className="u-full-width"
+                placeholder="¿Cual es tu objetivo?"
+                onChange={handleChange}
+                value={objective}
               />
 
-          <label>Fecha</label>
+          <label>Fecha límite</label>
               <input
-              type="date"
-              name="fecha"
-              className="u-full-width"
-              onChange={handleChange}
-              value={fecha}
+                type="date"
+                name="date"
+                className="u-full-width"
+                onChange={handleChange}
+                value={date}
               />
 
-          <label>Hora</label>
-              <input
-              type="time"
-              name="hora"
-              className="u-full-width"
-              onChange={handleChange}
-              value={hora}
-              />
-
-          <label>Description</label>
+          <label>Comentarios</label>
               <textarea 
                 className="u-full-width"
                 name="description"
@@ -103,9 +93,9 @@ const Form = ({createTarea}) => {
               </textarea>
 
               <button
-              type="submit"
-              className="u-full-width button-primary">
-                  Agregar
+                type="submit"
+                className="u-full-width color-btn">
+                Agregar
               </button>
           </form>
           

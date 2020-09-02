@@ -1,77 +1,62 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import Form from './Components/form'
 import Tareas from './Components/Tareas'
+import Footer from './Components/Footer'
 import PropTypes from 'prop-types'
 
 
 function App() {
-
-  let tareasIniciales = JSON.parse(localStorage.getItem('tareas'));
-  if(!tareasIniciales) {
-    tareasIniciales = [];
-  }
-
   //arreglo de tareas
-  const [tareas, updateC] = useState(tareasIniciales);
+  const[tasks, saveTasks] = useState([
 
-  //use Effect
-  useEffect( () => {
-    if(tareasIniciales) {
-      localStorage.setItem('tareas', JSON.stringify(tareas))
-    } else {
-      localStorage.setItem('tareas', JSON.stringify([]));
-    }
+  ]);
 
-  }, [tareas, tareasIniciales] );
-
-  const createTarea = tarea => {
-    updateC([
-      ...tareas,
-      tarea
+  //agrega tasks a las actuales
+  const createTask = task => {
+    saveTasks([
+      ...tasks,
+      task
     ]);
   }
 
-  //elimina tarea por su id
-  const removeTarea = id => {
-    const newTareas = tareas.filter(tarea => tarea.id !== id);
-    updateC(newTareas);
+  //elimina task por su id
+  const deleteTask = id => {
+    const newTasks = tasks.filter( task => task.id !== id);
+    saveTasks(newTasks)
   }
 
-  const title = tareas.length === 0 ? "no tienes tareas" : "administra tus taras";
-
-  //mensaje tareas vacias
-
-
+  //Mensajito condicional 
+  const title = tasks.length === 0 ? 'Aún no agregaste tareas' : 'Administra tus tareas'
 
   return (
     <Fragment>
-      <h1>Administrador de tareas</h1>
+      <h1>Anotador de Tareas</h1>
        <div className="container">
           <div className="row">
             <div className="one-half column">
-              <Form createTarea={createTarea}/>
-
+              <Form
+                createTask={createTask}
+              />
             </div>
             <div className="one-half column">
-              <h2>{title}</h2>
-              {tareas.map(tarea => (
+              <h2 className="task-container">{title}</h2>
+              {tasks.map(task => (
                 <Tareas 
-                key={tarea.id}
-                tarea={tarea}
-                removeTarea={removeTarea}
+                  key={task.id}
+                  task={task}
+                  deleteTask={deleteTask}
                 />
               ))}
             </div>
           </div>
-
       </div>
-
+      <Footer />
     </Fragment>
   );
 }
 
 Form.propTypes = {
-  createTarea: PropTypes.func.isRequired
+  createTask: PropTypes.func.isRequired
 }
 
 

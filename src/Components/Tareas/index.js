@@ -1,28 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import './Styles.css'
 
 
-const Tareas = ({tarea, removeTarea}) => {
+const Tareas = ({task, deleteTask}) => {
     return (
-        <div className="cita">
-            <p>Mascota: <span>{tarea.mascota}</span></p>
-            <p>propietario: <span>{tarea.propietario}</span></p>
-            <p>fecha: <span>{tarea.fecha}</span></p>
-            <p>hora: <span>{tarea.hora}</span></p>
-            <p>description: <span>{tarea.description}</span></p>
-
-            <button className="button eliminar u-full-width"
-            onClick={ () => removeTarea(tarea.id) }>
-                Eliminar &times
+        <div className="task">
+            <p>Tarea: <span>{task.task}</span></p>
+            <p>Objetivo: <span>{task.objective}</span></p>
+            <p>Fecha: <span>{task.date}</span></p>
+            <p>Comentarios: <span>{task.description}</span></p>
+            <button 
+                className="button eliminar u-full-width"
+                onClick={ () => deleteTask(task.id)}>
+                Eliminar
             </button>
         </div>
      );
 }
 
 Tareas.propTypes = {
-    tarea: PropTypes.object.isRequired,
-    removeTarea: PropTypes.func.isRequired
-  
-  }
+    task: PropTypes.object.isRequired,
+    deleteTask: PropTypes.func.isRequired
+}
 
 export default Tareas;
