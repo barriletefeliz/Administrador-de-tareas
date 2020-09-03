@@ -23,5 +23,7 @@ input[type="time"] {
     text-align: center;
     border-radius: 3px;
   }
-
+.tongue{
+    text-transform: lowercase;
+}
   

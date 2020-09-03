@@ -14,7 +14,6 @@ const Form = ({createTask}) => {
 
     const [error, updateError] = useState(false);
 
-
     const handleChange = e => {
         updateState({
             ...taskState,
@@ -50,7 +49,7 @@ const Form = ({createTask}) => {
   return ( 
       <Fragment>
           <h2 className="create-task">Ingresá una tarea</h2>
-          {error ? <p className="alert-error">Todos los campos son obligatorios</p>: null}
+          {error ? <p className="alert-error">Todos los campos son obligatorios <span className="tongue">:p</span></p>: null}
           <form 
             onSubmit={onSubmit}
           

@@ -26,7 +26,7 @@ function App() {
   }
 
   //Mensajito condicional 
-  const title = tasks.length === 0 ? 'Aún no agregaste tareas' : 'Administra tus tareas'
+  const title = tasks.length === 0 ? 'Y componentizá tus objetivos' : 'Administra tus tareas'
 
   return (
     <Fragment>
