@@ -1,0 +1,20 @@
+.logo-container {
+    margin: 5rem auto 0 auto;
+    max-width: 10rem;
+    max-height: 10rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .react-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+
+@keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

@@ -49,7 +49,7 @@ const Form = ({createTask}) => {
   return ( 
       <Fragment>
           <h2 className="create-task">Ingresá una tarea</h2>
-          {error ? <p className="alert-error">Todos los campos son obligatorios <span className="tongue">:p</span></p>: null}
+          {error ? <p className="alert-error">Todos los campos son obligatorios </p>: null}
           <form 
             onSubmit={onSubmit}
           
@@ -73,6 +73,8 @@ const Form = ({createTask}) => {
                 onChange={handleChange}
                 value={objective}
               />
+
+
 
           <label>Fecha límite</label>
               <input

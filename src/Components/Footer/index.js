@@ -1,16 +1,19 @@
 import React from 'react';
+import Icon from '../Icon'
+import './Styles.css'
 
-
-const Footer = ({title}) => {
+const Footer = () => {
 
   return (
-    <div className="container">
-    <div className="row">
-    <div className="one-half column">
-        <p className="task-container">Lucas Martinez FrontEndDev();</p>
-
-    </div>
-    </div>
+    <div>
+      <Icon />
+      <div className="container">
+        <div className="row">
+          <div className="one-half">
+            <h1 className="author">Lucas Martinez FrontEnd Dev</h1>
+          </div>
+        </div>
+      </div>
     </div>
 
   );

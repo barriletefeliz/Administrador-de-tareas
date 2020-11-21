@@ -26,11 +26,11 @@ function App() {
   }
 
   //Mensajito condicional 
-  const title = tasks.length === 0 ? 'Y componentizá tus objetivos' : 'Administra tus tareas'
+  const title = tasks.length === 0 ? 'Y organizá tus objetivos' : 'Administra tus tareas'
 
   return (
     <Fragment>
-      <h1>Anotador de Tareas</h1>
+      <h1>Bloc de Tareas</h1>
        <div className="container">
           <div className="row">
             <div className="one-half column">
