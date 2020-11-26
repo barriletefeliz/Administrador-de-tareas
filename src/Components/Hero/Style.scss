@@ -1,0 +1,40 @@
+.hero-wrapper {
+    /*z-index: -1; */
+    background-image: url(https://images.pexels.com/photos/1571783/pexels-photo-1571783.jpeg?cs=srgb&dl=pexels-simon-migaj-1571783.jpg&fm=jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: black;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    height: 100vh;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    @media (max-width: 800px) {
+        background-size: auto;
+  }
+    .hero-text {
+        padding: 50px;
+        .hero-title{
+            font-size: 4rem;
+        }
+        .hr {
+            height: 3px;
+            width: 100%;
+            background-color: black;
+        }
+    }
+    .off {
+        margin-top: 0rem;
+        background-color: yellow;
+        color: black;
+        padding: 0.5rem 1rem;
+        border: 3px solid black;
+        text-transform: uppercase;
+        font-family: 'Roboto', sans-serif;
+    }
+}

@@ -1,107 +1,185 @@
-import React, { Fragment, useState } from 'react'
-import uuid from 'uuid/dist/v4'
-import './Styles.css'
+import React, { useState } from 'react'
+import { calculateBrand, getDifferenceYear, getPlan } from '../../Helper'
+import './Style.scss'
 
-const Form = ({createTask}) => {
+const Form = ({ saveSummary, saveLoading }) => {
 
-    //State local de tareas
-    const [taskState, updateState] = useState({
-        task: '',
-        objective: '',
-        date: '',
-        description: ''
+    const [ data, saveData ] = useState({
+        brand: '',
+        year: '',
+        plan: ''
     });
 
-    const [error, updateError] = useState(false);
+    const [ error, saveError ] = useState(false);
 
-    const handleChange = e => {
-        updateState({
-            ...taskState,
+    //extracción de valores del State
+    const { brand, year, plan } = data;
+
+    //lectura de datos del form para colocarlos en el State
+    const getData = e => {
+        saveData({
+            ...data,
             [e.target.name] : e.target.value
         })
+
     }
 
-    //extracción de valores
-    const {task, objective, date, description} = taskState;
-
-    //agregar cita
-    const onSubmit = e => {
+    //submit
+    const handleSubmit = e => {
         e.preventDefault();
-        //validación
-        if(task.trim() === '' || objective.trim() === '' || date.trim() === '' || description.trim() === '' ){
-            updateError(true);
-            return
-        } updateError(false)
-        //asignación de id
-        taskState.id = uuid();
-        //creación de cita
-        createTask(taskState);
-        //reinicio del form
-        updateState({
-            task: '',
-            objective: '',
-            date: '',
-            description: ''
-        });
+        if(brand.trim() === '' || year.trim() === '' || plan.trim() === '') { 
+            saveError(true);
+        return;
+        }
 
+     saveError(false);
+
+     let result = 2000;
+
+     //obtención de diferencia de años
+     const difference = getDifferenceYear(year);
+
+     //resta 3% por cada año
+     result -= ((difference * 3) * result) / 100;
+     console.log('la resta del 3% es' + result);
+     //incremento volkswagen
+     //incremento ford
+     //incremento renault
+     //incremento chevrolet
+     //incremento peugeot
+     //incremento fiat
+     result = calculateBrand(brand) * result;
+
+     //terceros completo aumenta 30%
+     //todo riesgo aumenta 50%
+     const increasePlan = getPlan(plan);
+     result = parseFloat( increasePlan * result).toFixed(2);
+
+     saveLoading(true)
+
+     setTimeout(() => {
+        //ellimina el spinner
+        saveLoading(false)
+
+        //carga los datos
+        saveSummary({
+            quotation: result,
+             data
+         })
+
+     }, 3000)
+     //total
+     
     }
 
-  return ( 
-      <Fragment>
-          <h2 className="create-task">Ingresá una tarea</h2>
-          {error ? <p className="alert-error">Todos los campos son obligatorios </p>: null}
-          <form 
-            onSubmit={onSubmit}
-          
-          >
-              <label>Tarea</label>
-              <input
-                type="text"
-                name="task"
-                className="u-full-width"
-                placeholder="Ingresa tu tarea"
-                onChange={handleChange}
-                value={task}
-              />
+    return (
+        <div className="form-wrapper">
+            <form
+            className="input-group mb-3"
+                onSubmit={ handleSubmit }
+            >
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <label className="input-group-text" htmlFor="inputGroupSelect01">Marca</label>
+                    </div>
+                    <select 
+                        name='brand'
+                        value={ brand }
+                        onChange={ getData }
+                        className="custom-select" id="inputGroupSelect01"
+                    >
+                        <option value="">---Seleccione---</option>
+                        <option value="volkswagen">VOLKSWAGEN</option>
+                        <option value="ford">FORD</option>
+                        <option value="chevrolet">CHEVROLET</option>
+                        <option value="peugeot">PEUGEOT</option>
+                        <option value="renault">RENAULT</option>
+                        <option value="fiat">FIAT</option>
+                    </select>
+                </div>
 
-          <label>Objetivo</label>
-              <input
-                type="text"
-                name="objective"
-                className="u-full-width"
-                placeholder="¿Cual es tu objetivo?"
-                onChange={handleChange}
-                value={objective}
-              />
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <label className="input-group-text" htmlFor="inputGroupSelect01">Año</label>
+                    </div>
+                    <select
+                        name='year'
+                        value={ year }
+                        onChange={ getData }
+                        className="custom-select" id="inputGroupSelect01"
+                    >
+                        <option value="">---Seleccione---</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                        <option value="2015">2015</option>
+                    </select>
+                </div>
 
+                <div className="plan-wrapper">
+                    <label>
+                    <div className="blog-card">
+                        <div className="meta">
+                            <div className="photo one"></div>
+                            <ul className="details">
+                                <li className="tags"></li>
+                                <span class="badge badge-primary"></span>
+                                <span class="badge badge-light"></span>
+                                <h6>Techo <span class="badge badge-secondary"></span></h6>
+                            </ul>
+                        </div>
+                        
+                        <div className="description">
+                            <h1>Terceros FULL completo</h1>
+                            <h2>FULL Potenciado</h2>
+                                <input 
+                                    className="text-center"
+                                    type="radio"
+                                    name="plan"
+                                    value="terceros completo"
+                                    checked={ plan === 'terceros completo' }
+                                    onChange={ getData }
+                                /> 
+                        </div>
+                    </div>
+                    </label>
 
+                    <label>
+                    <div className="blog-card alt">
+                        <div className="meta">
+                            <div className="photo two"></div>
+                            <ul className="details">
+                                <li className="tags"></li>
+                                <li className="tags"></li>
+                                <li className="tags"></li>
+                            </ul>
+                        </div>
+                        <div className="description">
+                            <h1>GARANTIZADO TODO RIESGO</h1>
+                            <h2>Franquicia fija</h2>
+                                <input 
+                                className="text-center"
+                                type="radio"
+                                name="plan"
+                                value="todo riesgo"
+                                checked={ plan === 'todo riesgo' }
+                                onChange={ getData }
+                                />
+                        </div>
+                    </div>
+                    </label>
+                </div>
 
-          <label>Fecha límite</label>
-              <input
-                type="date"
-                name="date"
-                className="u-full-width"
-                onChange={handleChange}
-                value={date}
-              />
+                { error ? <div className="alert alert-danger  btn-block text-center" role="alert">Todos los campos son obligatorios</div> : null }
 
-          <label>Comentarios</label>
-              <textarea 
-                className="u-full-width"
-                name="description"
-                onChange={handleChange}
-                value={description}>
-              </textarea>
+                <button type="submit" className="btn btn-primary btn-lg btn-block">Cotizar</button>
+            </form>
+        </div>
+        
+    );
 
-              <button
-                type="submit"
-                className="u-full-width color-btn">
-                Agregar
-              </button>
-          </form>
-          
-      </Fragment>
-  );
 }
 
-export default Form;
+export default Form

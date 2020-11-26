@@ -1,64 +1,42 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
+import Header from './Components/Header'
+import Hero from './Components/Hero'
 import Form from './Components/form'
-import Tareas from './Components/Tareas'
-import Footer from './Components/Footer'
-import PropTypes from 'prop-types'
+import Spinner from './Components/Spinner'
+import Summary from './Components/Summary'
+import Result from './Components/Result'
 
+import './App.scss';
 
 function App() {
-  //arreglo de tareas
-  const[tasks, saveTasks] = useState([
 
-  ]);
+  const [ summary , saveSummary ] = useState({
+    quotation: 0,
+    data: {
+      brand: '',
+      year: '',
+      plan: ''
+    }
+  });
 
-  //agrega tasks a las actuales
-  const createTask = task => {
-    saveTasks([
-      ...tasks,
-      task
-    ]);
-  }
+  const [ loading, saveLoading ] = useState(false)
 
-  //elimina task por su id
-  const deleteTask = id => {
-    const newTasks = tasks.filter( task => task.id !== id);
-    saveTasks(newTasks)
-  }
-
-  //Mensajito condicional 
-  const title = tasks.length === 0 ? 'Y organizá tus objetivos' : 'Administra tus tareas'
+  //extracción de datos
+  const { data, quotation } = summary
 
   return (
-    <Fragment>
-      <h1>Bloc de Tareas</h1>
-       <div className="container">
-          <div className="row">
-            <div className="one-half column">
-              <Form
-                createTask={createTask}
-              />
-            </div>
-            <div className="one-half column">
-              <h2 className="task-container">{title}</h2>
-              {tasks.map(task => (
-                <Tareas 
-                  key={task.id}
-                  task={task}
-                  deleteTask={deleteTask}
-                />
-              ))}
-            </div>
-          </div>
+    <>
+      <Header title='Seguro Online'/>
+      <Hero title='El mejor seguro está acá' slogan='No busques más, disfrutá nuestro plan más vendido' off='20% off por 3 meses.' />
+      <div className="app-wrapper">
+        <Form saveSummary={ saveSummary } saveLoading={ saveLoading }/>
+        { loading ? <Spinner /> : null }
+        <Result quotation={ quotation }/>
+        <Summary data={ data }/> 
       </div>
-      <Footer />
-    </Fragment>
+      
+    </>
   );
 }
-
-Form.propTypes = {
-  createTask: PropTypes.func.isRequired
-}
-
-
 
 export default App;
